@@ -1,0 +1,82 @@
+﻿<Window x:Class="Wpf_13.MainWindow"
+         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Wpf_13"
+        xmlns:col="clr-namespace:System.Collections;assembly=mscorlib"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" Style="{DynamicResource WindowStyle}">
+
+    <Window.CommandBindings>
+        <CommandBinding Command="Open" Executed="OpenExecuted"/>
+        <CommandBinding Command="Save" Executed="SaveExecuted"/>
+        <CommandBinding Command="Close" Executed="ExitExecuted" CanExecute="ExitCanExecute"/>
+    </Window.CommandBindings>
+
+    <DockPanel>
+        <Menu  Style="{DynamicResource MenuStyle}" DockPanel.Dock="Top"  Padding="5">
+            <MenuItem  Style="{DynamicResource MenuStyle}" Header="_Файл"  Padding="15,2" FontWeight="SemiBold">
+                <MenuItem Style="{DynamicResource MenuItemStyle}" Header="_Открыть" Command="Open"/>
+                <MenuItem Style="{DynamicResource MenuItemStyle}" Header="_Сохранить" Command="Save"/>
+                <Separator BorderThickness="0"/>
+                <MenuItem Style="{DynamicResource MenuItemStyle}" Header="_Выход" Command="Close"/>
+            </MenuItem>
+        </Menu>
+        <Grid DockPanel.Dock="Top">
+            <Grid.RowDefinitions>
+
+                <RowDefinition Height ="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <ToolBarTray Style="{DynamicResource ToolBarTrayStyle}"  Margin="0" Grid.Row="0">
+                <ToolBar ToolBarTray.IsLocked="True" Template="{DynamicResource ToolBarTemplate1}" Style="{DynamicResource ToolBarTrayStyle}">
+                    <ComboBox Style="{DynamicResource ToolBarTrayStyle}" ItemsSource="{StaticResource font}" SelectedIndex="0" Width="200" x:Name="font"/>
+                    <ComboBox Style="{DynamicResource ToolBarTrayStyle}" ItemsSource="{StaticResource size}" SelectedIndex="2" Width="50" x:Name="size"/>
+
+                </ToolBar>
+
+                <ToolBar Template="{DynamicResource ToolBarTemplate1}" Style="{DynamicResource ToolBarTrayStyle}" ToolBarTray.IsLocked="True" HorizontalAlignment="Right">
+                  
+                    <Button Style="{DynamicResource ButtonStyle}">
+                        <Image Source="Data/bold.png" MouseLeftButtonDown="Image_MouseLeftButtonDown"/>
+                    </Button>
+
+                    <Separator/>
+
+                    <Button Style="{DynamicResource ButtonStyle}">
+                        <Image Source="Data/italic.png" MouseLeftButtonDown="Image_MouseLeftButtonDown_1"/>
+                    </Button>
+
+                    <Separator/>
+
+                    <Button Style="{DynamicResource ButtonStyle}">
+                        <Image Source="Data/underline.png" MouseLeftButtonDown="Image_MouseLeftButtonDown_2"/>
+                    </Button>
+
+                    
+
+                </ToolBar>
+
+                <ToolBar Template="{DynamicResource ToolBarTemplate1}" Style="{DynamicResource ToolBarTrayStyle}" ToolBarTray.IsLocked="True">
+                    <StackPanel  VerticalAlignment="Center">
+                        <RadioButton  Style="{DynamicResource RadioButtonStyle}" Content="Чёрный"  IsChecked="True" Checked="RadioButton_Checked"  />
+                        <RadioButton Style="{DynamicResource RadioButtonStyle}" Content="Красный"  Checked="RadioButton_Checked_1"/>
+                    </StackPanel>
+                </ToolBar>
+                <ToolBar Template="{DynamicResource ToolBarTemplate1}" Style="{DynamicResource ToolBarTrayStyle}" ToolBarTray.IsLocked="True">
+                    <ComboBox Style="{DynamicResource ToolBarTrayStyle}" Name="ThemeSelect" HorizontalAlignment="Right"/>
+                </ToolBar>
+            </ToolBarTray>
+            <TextBox  Style="{DynamicResource TextBlockStyle}" x:Name="textBox" Grid.Row="1" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" 
+                      FontFamily="{Binding ElementName=font, Path=SelectedItem.Tag}"
+                      FontSize="{Binding ElementName=size, Path=SelectedItem.Tag}">
+                <TextBox.Background>
+                    <ImageBrush/>
+                </TextBox.Background>
+            </TextBox>
+        </Grid>
+    </DockPanel>
+</Window>
